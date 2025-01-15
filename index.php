@@ -23,7 +23,6 @@ function fetchCategory($conn, $category_id) {
     return mysqli_fetch_assoc($category_result);
 }
 ?>
-
 <!-- FEATURED POST -->
 <?php if (mysqli_num_rows($featured_result) == 1) : ?>
 <section class="featured">
