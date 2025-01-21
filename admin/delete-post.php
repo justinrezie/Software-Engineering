@@ -23,10 +23,11 @@ if(isset($_GET['id'])){
 
             if(!mysqli_errno($conn)){
                 $_SESSION['delete-post-success'] = "Post deleted successfuly";
-                
+                header('location:' . ROOT_URL . 'admin/');
+                die();         
             }
         }
     }
 }
-header('locattion:' . ROOT_URL . 'admin/manage-post.php');
+header('location:' . ROOT_URL . 'admin/');
 die();

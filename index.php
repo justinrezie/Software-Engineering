@@ -59,21 +59,21 @@ function fetchCategory($conn, $category_id) {
 <!-- POSTS -->
 <section class="posts">
     <div class="container posts_container">
-        <?php while ($row = mysqli_fetch_assoc($post)) : ?>
+        <?php while ($thumbnail = mysqli_fetch_assoc($post)) : ?>
         <article class="post">
             <div class="post_thumbnail">
-                <img src="<?= ROOT_URL . 'images/' . $row['thumbnail'] ?>" >
+                <img src="images/<?= $thumbnail['thumbnail'] ?>" >
             </div>
             <div class="post_info">
-                <?php $category = fetchCategory($conn, $row['category_id'])?>
-                <a href="<?= ROOT_URL ?>category-post.php?id=<?= $row['category_id'] ?>" class="category_button"><?= $category['title'] ?></a>
+                <?php $category = fetchCategory($conn, $thumbnail['category_id'])?>
+                <a href="<?= ROOT_URL ?>category-post.php?id=<?= $thumbnail['category_id'] ?>" class="category_button"><?= $category['title'] ?></a>
                 <h2 class="post_title">
-                    <a href="<?= ROOT_URL ?>post.php?id=<?= $row['id'] ?>"><?= $row['title'] ?></a>
+                    <a href="<?= ROOT_URL ?>post.php?id=<?= $thumbnail['id'] ?>"><?= $thumbnail['title'] ?></a>
                 </h2>
-                <p class="post_body"><?= substr($row['body'], 0, 150) ?>...
+                <p class="post_body"><?= substr($thumbnail['body'], 0, 150) ?>...
                 <div class="post_author">
                     <?php
-                    $author_id = $row['author_id'];
+                    $author_id = $thumbnail['author_id'];
                     $author_query = $conn->prepare("SELECT * FROM user WHERE id = ?");
                     $author_query->bind_param("i", $author_id);
                     $author_query->execute();
@@ -81,11 +81,11 @@ function fetchCategory($conn, $category_id) {
                     $author = $author_result->fetch_assoc();
                     ?>
                     <div class="post_author-avatar">
-                        <img src="./images/<?= $author['avatar']?>">
+                        <img src="images/<?= $author['avatar']?>">
                     </div>
                     <div class="post_author-info">
                         <h5>BY: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
-                        <small><?= date("M d, Y - H:i", strtotime($row['date_time'])) ?></small>
+                        <small><?= date("M d, Y - H:i", strtotime($thumbnail['date_time'])) ?></small>
                     </div>
                 </div>
             </div>

@@ -659,6 +659,7 @@ nav button{
       grid-template-columns: 1fr 1fr;
       gap: 3rem;
   }
+  
   .footer_container{
       grid-template-columns: 1fr 1fr ;
       gap: 3rem;
