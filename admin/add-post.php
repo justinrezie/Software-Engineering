@@ -38,7 +38,7 @@ unset($_SESSION['add-post-data']);
                 <label for="thumbnail">Add Thumbnail</label>
                 <input type="file" name="thumbnail" id="thumbnail">
             </div>
-            <button type="submit" name="submit" class="btn">Add Post</button>
+            <button type="submit" name="submit" value="Upload" class="btn">Add Post</button>
         </form>
     </div>
 </section>

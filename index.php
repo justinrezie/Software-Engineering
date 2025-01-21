@@ -62,7 +62,7 @@ function fetchCategory($conn, $category_id) {
         <?php while ($row = mysqli_fetch_assoc($post)) : ?>
         <article class="post">
             <div class="post_thumbnail">
-                <img src="./images/<?= $row['thumbnail'] ?>" alt="1">
+                <img src="./images/<?= $row['thumbnail'] ?>" >
             </div>
             <div class="post_info">
                 <?php $category = fetchCategory($conn, $row['category_id'])?>

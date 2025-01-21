@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
                 $time = time();
                 $avatar_name = $time . $avatar['name'];
                 $avatar_tmp_name = $avatar['tmp_name'];
-                $avatar_destination_path = 'images/' . $avatar_name;
+                $avatar_destination_path = './images/' . $avatar_name;
 
                 if ($avatar['error'] === UPLOAD_ERR_OK) {
                     $allowed_files = ['png', 'jpg', 'jpeg'];
