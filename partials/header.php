@@ -27,6 +27,7 @@ if (isset($_SESSION['user-id'])) {
         <!-- <li><a href="<?= ROOT_URL ?>content.php">សៀវភៅ</a></li> -->
         <li><a href="<?= ROOT_URL ?>about.php">ថ្នាក់</a></li>
         <li><a href="<?= ROOT_URL ?>content.php">Content</a></li>
+        <li><a href="<?= ROOT_URL ?>services.php">Services</a></li>
         <!-- Show 'Signin' only if the user is not logged in -->
         <?php if (!isset($_SESSION['user-id'])): ?>
           <li><a href="<?= ROOT_URL ?>signin.php">Signin</a></li>
