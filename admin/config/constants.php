@@ -1,5 +1,5 @@
 <?php
-define('ROOT_URL', 'http://localhost/Software%20Engineering/');
+define('ROOT_URL', 'http://localhost/Software-Engineering/');
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root'); // Update with your username
 define('DB_PASS', ''); // Update with your password

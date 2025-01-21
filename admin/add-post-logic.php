@@ -29,10 +29,12 @@ if (isset($_POST['submit'])) {
             $errors[] = "Unsupported file type. Allowed types: png, jpg, jpeg.";
         } elseif ($thumbnail['size'] >= 2_000_000) {
             $errors[] = "File size too big. Should be less than 2MB.";
+            
         } else {
             move_uploaded_file($thumbnail_tmp_name, $thumbnail_destination_path);
         }
     }
+
 
     // Redirect if errors
     if (!empty($errors)) {
