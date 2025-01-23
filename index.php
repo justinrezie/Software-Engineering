@@ -13,8 +13,8 @@ $featured_query = "SELECT * FROM posts WHERE is_featured=1";
 $featured_result = mysqli_query($conn, $featured_query);
 $featured = mysqli_fetch_assoc($featured_result);
 
-// Fetch 9 posts
-$query = "SELECT * FROM posts ORDER BY date_time DESC LIMIT 9";
+// Fetch 5 posts
+$query = "SELECT * FROM posts ORDER BY date_time DESC LIMIT 5";
 $post = mysqli_query($conn, $query);
 
 function fetchCategory($conn, $category_id) {
@@ -64,7 +64,7 @@ function fetchCategory($conn, $category_id) {
         <article class="post">
             <div class="post_thumbnail">
                 <img src="images/hero-css.png" alt="">
-                <!-- <img src="images/<?= $thumbnail['thumbnail'] ?>" > -->
+                <!-- <img src="images/<?= $thumbnail['thumbnail'] ?>" -->
             </div>
             <div class="post_info">
                 <?php $category = fetchCategory($conn, $thumbnail['category_id'])?>

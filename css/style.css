@@ -118,7 +118,10 @@ nav button{
   height: 2.5rem;
   border-radius: 50%;
   overflow: hidden;
-  border: 0.3rem solid var(--color-bg);
+  border: 0.2rem solid var(--color-bg);
+}
+.avatar img{
+  width: 100%;
 }
 .nav_logo{
   font-weight: 600;
