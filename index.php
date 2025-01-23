@@ -29,7 +29,8 @@ function fetchCategory($conn, $category_id) {
 <section class="featured">
     <div class="container featured_container">
         <div class="post_thumbnail">
-            <img src="images/<?= $featured['thumbnail'] ?>">
+            <img src="images/Information-Technology.jpg" alt="">
+            <!-- <img src="images/<?= $featured['thumbnail'] ?>"> -->
         </div>
         <div class="post_info">
             <?php
@@ -62,7 +63,8 @@ function fetchCategory($conn, $category_id) {
         <?php while ($thumbnail = mysqli_fetch_assoc($post)) : ?>
         <article class="post">
             <div class="post_thumbnail">
-                <img src="images/<?= $thumbnail['thumbnail'] ?>" >
+                <img src="images/hero-css.png" alt="">
+                <!-- <img src="images/<?= $thumbnail['thumbnail'] ?>" > -->
             </div>
             <div class="post_info">
                 <?php $category = fetchCategory($conn, $thumbnail['category_id'])?>
