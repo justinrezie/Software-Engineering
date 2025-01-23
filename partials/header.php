@@ -38,7 +38,7 @@ if (isset($_SESSION['user-id'])) {
           <li class="nav_profile"> 
             <div class="avatar">
               <!-- <img src="<?= ROOT_URL . 'images/' . $avatar['avatar'] ?>" alt="User Avatar"> -->
-               <img src="images/landscape_comp.jpeg" alt="">
+               <img src="images/IShowSpeed_at_Chinatown_(Portrait)_03.jpg" alt="">
             </div>
             <ul>
             <?php if(isset($_SESSION['user_is_admin'])): ?>
