@@ -38,7 +38,7 @@ if (isset($_SESSION['user-id'])) {
           <li class="nav_profile"> 
             <div class="avatar">
               <!-- <img src="<?= ROOT_URL . 'images/' . $avatar['avatar'] ?>" alt="User Avatar"> -->
-               <img src="images/IShowSpeed_at_Chinatown_(Portrait)_03.jpg" alt="">
+              <img src="images/IShowSpeed_at_Chinatown_(Portrait)_03.jpg" alt="">
             </div>
             <ul>
             <?php if(isset($_SESSION['user_is_admin'])): ?>
@@ -47,7 +47,7 @@ if (isset($_SESSION['user-id'])) {
               <li><a href="<?= ROOT_URL ?>logout.php">Logout</a></li>
             </ul>
           </li>
-        <?php endif; ?>
+        <?php endif ?>
       </ul>
       <button id="open_nav-btn"><i class="uil uil-bars"></i></button>
       <button id="close_nav-btn"><i class="uil uil-times"></i></button>

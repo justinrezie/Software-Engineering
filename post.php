@@ -9,7 +9,7 @@ if(isset($_GET['id'])){
     $result = mysqli_query($conn, $query);
     $post = mysqli_fetch_assoc($result);
 }else{
-    header('location' . ROOT_URL . 'blog.php');
+    header('location' . ROOT_URL . 'post.php');
     die();
 }
 ?>
@@ -25,10 +25,7 @@ if(isset($_GET['id'])){
                 $author_result = $author_query->get_result();
                 $author = $author_result->fetch_assoc();
                 ?>
-                <div class="post_author-info">
-                    <h5>BY: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
-                    <small><?= date("M d, Y - H:i", strtotime($featured['date_time'])) ?></small>
-                </div>
+
         </div>
         <div class="singlepost_thumbnail">
         <img src="./images/<?= $post['thumbnail']?>">
@@ -36,6 +33,10 @@ if(isset($_GET['id'])){
         <p>
             <?= $post['body'] ?>
         </p>
+        <div class="post_author-info">
+                    <h5>BY: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
+                    <small><?= date("M d, Y - H:i", strtotime($featured['date_time'])) ?></small>
+                </div>
     </div>
 </section>
 <?php include './partials/footer.php'; ?>
