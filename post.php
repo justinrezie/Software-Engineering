@@ -28,7 +28,8 @@ if(isset($_GET['id'])){
 
         </div>
         <div class="singlepost_thumbnail">
-        <img src="./images/<?= $post['thumbnail']?>">
+        <img src="images/Information-Technology.jpg" alt="">
+        <!-- <img src="./images/<?= $post['thumbnail']?>"> -->
         </div>
         <p>
             <?= $post['body'] ?>

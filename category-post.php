@@ -40,7 +40,8 @@ if (isset($_GET['id'])) {
         <?php while ($row = mysqli_fetch_assoc($posts)) : ?>
             <article class="post">
                 <div class="post_thumbnail">
-                    <img src="./images/<?= $row['thumbnail'] ?>">
+                <img src="images/Information-Technology.jpg" alt="">
+                    <!-- <img src="./images/<?= $row['thumbnail'] ?>"> -->
                 </div>
                 <div class="post_info">
                     <a href="<?= ROOT_URL ?>category-post.php?id=<?= $row['category_id'] ?>" class="category_button"><?= $category['title'] ?></a>
