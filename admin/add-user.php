@@ -1,4 +1,5 @@
 <?php
+include 'partials/header.php';
 require 'config/constants.php';
 
 // Get back form data if there was a registration error
@@ -29,7 +30,7 @@ unset($_SESSION['signup-data']);
 
 <section class="form_section">
     <div class="container form_section-container">
-        <h2>Sign Up</h2>
+        <h2>Add User</h2>
         <?php if (isset($_SESSION['signup'])): ?> 
             <div class="alert_message error">
                 <p>

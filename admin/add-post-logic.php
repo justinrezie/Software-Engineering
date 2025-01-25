@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
         $allowed_files = ['png', 'jpg', 'jpeg'];
         $thumbnail_name = time() . $thumbnail['name'];
         $thumbnail_tmp_name = $thumbnail['tmp_name'];
-        $thumbnail_destination_path = '/images/' . $thumbnail_name;
+        $thumbnail_destination_path = '.../images/' . $thumbnail_name;
         $extension = strtolower(pathinfo($thumbnail_name, PATHINFO_EXTENSION));
 
         if (!in_array($extension, $allowed_files)) {

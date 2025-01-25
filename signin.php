@@ -22,7 +22,7 @@ session_start();
           <input type="password" name="password" placeholder="Password" required>
           <button type="submit" name="submit" class="btn">Sign In</button>
         </form>
-        <small>Don't has account? <a href="signup.php">Sign Up <a/></small>
+        <!-- <small>Don't has account? <a href="signup.php">Sign Up <a/></small> -->
       </div>
     </section>
   </body>

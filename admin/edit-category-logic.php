@@ -18,6 +18,7 @@ if(!$title || !$description){
         $_SESSION['edit-category'] = "Couldn't update category";
     }else{
         $_SESSION['edit-category-success'] = "Category $title update successfully";
+        
     }
 }
 }

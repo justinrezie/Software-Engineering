@@ -14,7 +14,7 @@ $featured_result = mysqli_query($conn, $featured_query);
 $featured = mysqli_fetch_assoc($featured_result);
 
 // Fetch 5 posts
-$query = "SELECT * FROM posts ORDER BY date_time DESC LIMIT 5";
+$query = "SELECT * FROM posts ORDER BY date_time DESC LIMIT 10";
 $post = mysqli_query($conn, $query);
 
 function fetchCategory($conn, $category_id) {

@@ -17,9 +17,9 @@ unset($_SESSION['add-post-data']);
 <section class="form_section">
     <div class="container form_section-container">
         <h2>Add Post</h2>
-        <div class="alert_message error">
+        <!-- <div class="alert_message error">
             <p>This is an error message</p>
-        </div>
+        </div> -->
         <form action="<?= ROOT_URL ?>admin/add-post-logic.php" enctype="multipart/form-data" method="POST">
             <input type="text" name="title" value="<?= $title?>" placeholder="Title">
             <select name="category">
