@@ -22,6 +22,8 @@ function fetchCategory($conn, $category_id) {
     $category_result = mysqli_query($conn, $category_query);
     return mysqli_fetch_assoc($category_result);
 }
+$query = "SELECT * FROM files ORDER BY created_at DESC";
+$result = mysqli_query($conn, $query);
 ?>
 
 <!-- FEATURED POST -->
@@ -58,43 +60,28 @@ function fetchCategory($conn, $category_id) {
 </section>
 <?php endif ?>
 <!-- POSTS -->
-<section class="posts">
-    <div class="container posts_container">
-        <?php while ($thumbnail = mysqli_fetch_assoc($post)) : ?>
-        <article class="post">
-            <div class="post_thumbnail">
-                <img src="images/hero-css.png" alt="">
-                <!-- <img src="images/<?= $thumbnail['thumbnail'] ?>" -->
-            </div>
-            <div class="post_info">
-                <?php $category = fetchCategory($conn, $thumbnail['category_id'])?>
-                <a href="<?= ROOT_URL ?>category-post.php?id=<?= $thumbnail['category_id'] ?>" class="category_button"><?= $category['title'] ?></a>
-                <h2 class="post_title">
-                    <a href="<?= ROOT_URL ?>post.php?id=<?= $thumbnail['id'] ?>"><?= $thumbnail['title'] ?></a>
-                </h2>
-                <p class="post_body"><?= substr($thumbnail['body'], 0, 150) ?>...
-                <div class="post_author">
-                    <?php
-                    $author_id = $thumbnail['author_id'];
-                    $author_query = $conn->prepare("SELECT * FROM user WHERE id = ?");
-                    $author_query->bind_param("i", $author_id);
-                    $author_query->execute();
-                    $author_result = $author_query->get_result();
-                    $author = $author_result->fetch_assoc();
-                    ?>
-                    <div class="post_author-avatar">
-                        <img src="images/<?= $author['avatar']?>">
+<section class="files_section">
+    <h1>Uploaded Files</h1>
+    <?php if (mysqli_num_rows($result) > 0): ?>
+        <div class="files_grid">
+            <?php while ($file = mysqli_fetch_assoc($result)): ?>
+                <div class="file_card">
+                    <h3><?= htmlspecialchars($file['title']) ?></h3>
+                    <p><?= nl2br(htmlspecialchars($file['description'])) ?></p>
+                    <p><strong>Uploaded At:</strong> <?= date("M d, Y - H:i", strtotime($file['created_at'])) ?></p>
+
+                    <!-- View File Button -->
+                    <!-- Download File Button -->
+                    <!-- Download File Button -->
+                    <a href="download_file.php?file=yourfile.pdf" class="btn">Download PDF</a>
                     </div>
-                    <div class="post_author-info">
-                        <h5>BY: <?= "{$author['firstname']} {$author['lastname']}" ?></h5>
-                        <small><?= date("M d, Y - H:i", strtotime($thumbnail['date_time'])) ?></small>
-                    </div>
-                </div>
-            </div>
-        </article>
-        <?php endwhile ?>
-    </div>
+            <?php endwhile; ?>
+        </div>
+    <?php else: ?>
+        <p>No files found.</p>
+    <?php endif; ?>
 </section>
+
 
 <?php include './partials/footer.php'; ?>
 <script src="./js/main.js"></script>

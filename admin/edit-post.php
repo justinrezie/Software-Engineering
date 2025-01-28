@@ -34,14 +34,6 @@ if(isset($_GET['id'])){
 </select>
 
             <textarea name="body" rows="10" placeholder="Body"><?= $post['body'] ?></textarea>
-            <div class="form_control inline">
-                <input type="checkbox" name="is_featured" id="is_featured" value="1" checked>
-                <label for="is_featured">Featured</label>
-            </div>
-            <div class="form_control">
-                <label for="thumbnail">Change Thumbnail</label>
-                <input type="file" name="thumbnail" id="thumbnail">
-            </div>
             <button type="submit" name="submit" class="btn">Update Post</button>
         </form>
     </div>

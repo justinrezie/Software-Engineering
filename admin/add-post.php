@@ -1,49 +1,34 @@
 <?php
 session_start();
 include 'partials/header.php';
+require 'config/database.php';
 
-// Fetch category from database
-$query = "SELECT * FROM `category` ";
+// Fetch categories (if needed)
+$query = "SELECT * FROM `category`";
 $category_result = mysqli_query($conn, $query);
 
-//fetch back form data form was invaild
-$title = $_SESSION['add-post-data']['title'] ?? null;
-$body = $_SESSION['add-post-data']['body'] ?? null;
-
-//delete
-unset($_SESSION['add-post-data']);
+// Fetch previous form data (if any)
+$title = $_SESSION['upload-data']['title'] ?? null;
+$description = $_SESSION['upload-data']['description'] ?? null;
+unset($_SESSION['upload-data']);
 ?>
-
 <section class="form_section">
-    <div class="container form_section-container">
-        <h2>Add Post</h2>
-        <!-- <div class="alert_message error">
-            <p>This is an error message</p>
-        </div> -->
-        <form action="<?= ROOT_URL ?>admin/add-post-logic.php" enctype="multipart/form-data" method="POST">
-            <input type="text" name="title" value="<?= $title?>" placeholder="Title">
-            <select name="category">
-                <?php while($category_row = mysqli_fetch_assoc($category_result)) : ?>
-                    <option value="<?= $category_row['id'] ?>"><?= $category_row['title'] ?></option>
-                <?php endwhile ?>
-            </select>
-            <textarea rows="10" name="body" value="<?= $body?>"  placeholder="Body"></textarea>
-            <?php if(isset($_SESSION['user_is_admin'])):?>
-            <div class="form_control inline">
-                <input type="checkbox" name="is_featured" value="1" id="is_featured" checked>
-                <label for="is_featured">Featured</label>
-            </div>
-            <?php endif ?>
-            <div class="form_control">
-                <label for="thumbnail">Add Thumbnail</label>
-                <input type="file" name="thumbnail" id="thumbnail">
-            </div>
-            <button type="submit" name="submit" value="Upload" class="btn">Add Post</button>
-        </form>
-    </div>
+    <form action="add-post-logic.php" enctype="multipart/form-data" method="POST">
+        <input type="text" name="title" placeholder="File Title" value="<?= htmlspecialchars($title) ?>">
+        <textarea name="description" placeholder="Description"><?= htmlspecialchars($description) ?></textarea>
+        <label for="file_upload">Choose File:</label>
+        <input type="file" name="file_upload" id="file_upload">
+        <button type="submit" name="submit" value="Upload" class="btn">Upload File</button>
+    </form>
 </section>
 
-<?php
-include 'partials/footer.php';
-?>
-<script src="../js/main.js"></script>
+<!-- Display Error or Success Messages -->
+<?php if (isset($_SESSION['upload_errors'])): ?>
+    <p class="alert_message error"><?= $_SESSION['upload_errors'] ?></p>
+    <?php unset($_SESSION['upload_errors']); ?>
+<?php elseif (isset($_SESSION['upload_success'])): ?>
+    <p class="alert_message success"><?= $_SESSION['upload_success'] ?></p>
+    <?php unset($_SESSION['upload_success']); ?>
+<?php endif; ?>
+
+<?php include 'partials/footer.php'; ?>

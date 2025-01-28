@@ -1,66 +1,62 @@
 <?php
-require 'config/database.php';
 session_start();
+require 'config/database.php';
 
 if (isset($_POST['submit'])) {
-    $author_id = $_SESSION['user-id'];
     $title = filter_var($_POST['title'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $body = filter_var($_POST['body'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $category_id = filter_var($_POST['category'], FILTER_SANITIZE_NUMBER_INT);
-    $is_featured = isset($_POST['is_featured']) ? 1 : 0;
-    $thumbnail = $_FILES['thumbnail'];
+    $description = filter_var($_POST['description'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $file = $_FILES['file_upload'];
 
-    // Validate input data
     $errors = [];
-    if (!$title) $errors[] = "Enter post title";
-    if (!$category_id) $errors[] = "Select post category";
-    if (!$body) $errors[] = "Enter post body";
-    if (!isset($thumbnail['tmp_name']) || empty($thumbnail['tmp_name'])) $errors[] = "Choose a valid post thumbnail";
 
-    // Validate and process thumbnail
-    if (empty($errors)) {
-        $allowed_files = ['png', 'jpg', 'jpeg'];
-        $thumbnail_name = time() . $thumbnail['name'];
-        $thumbnail_tmp_name = $thumbnail['tmp_name'];
-        $thumbnail_destination_path = '.../images/' . $thumbnail_name;
-        $extension = strtolower(pathinfo($thumbnail_name, PATHINFO_EXTENSION));
+    // Validate form fields
+    if (!$title) $errors[] = "Enter a title for the file.";
+    if (empty($file['name'])) $errors[] = "Please choose a file to upload.";
 
-        if (!in_array($extension, $allowed_files)) {
-            $errors[] = "Unsupported file type. Allowed types: png, jpg, jpeg.";
-        } elseif ($thumbnail['size'] >= 2_000_000) {
-            $errors[] = "File size too big. Should be less than 2MB.";
-            
-        } else {
-            move_uploaded_file($thumbnail_tmp_name, $thumbnail_destination_path);
+    if (!empty($file['name'])) {
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'pdf', 'docx'];
+        $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        if (!in_array($file_extension, $allowed_extensions)) {
+            $errors[] = "Invalid file type. Allowed types: jpg, jpeg, png, pdf, docx.";
+        }
+
+        if ($file['size'] > 2_000_000) {
+            $errors[] = "File size too big. Must be less than 2MB.";
         }
     }
 
-
-    // Redirect if errors
     if (!empty($errors)) {
-        $_SESSION['add-post'] = implode(", ", $errors);
-        $_SESSION['add-post-data'] = $_POST;
-        header('location:' . ROOT_URL . 'admin/add-post.php');
-        die();
+        $_SESSION['upload_errors'] = implode(', ', $errors);
+        $_SESSION['upload-data'] = ['title' => $title, 'description' => $description];
+        header("Location: add-post.php");
+        exit();
     }
 
-    // Update is_featured if needed
-    if ($is_featured) {
-        $conn->query("UPDATE posts SET is_featured=0");
+    // Handle file upload
+    $file_name = time() . "_" . basename($file['name']);
+    $upload_path = "uploads/" . $file_name;
+
+    if (move_uploaded_file($file['tmp_name'], $upload_path)) {
+        // Insert file record into the database
+        $stmt = $conn->prepare("INSERT INTO files (title, description, file_name) VALUES (?, ?, ?)");
+        if ($stmt) {
+            $stmt->bind_param("sss", $title, $description, $file_name);
+
+            if ($stmt->execute()) {
+                $_SESSION['upload_success'] = "File uploaded successfully!";
+            } else {
+                $_SESSION['upload_errors'] = "Database error: " . $stmt->error;
+            }
+            $stmt->close();
+        } else {
+            $_SESSION['upload_errors'] = "Failed to prepare the database statement: " . $conn->error;
+        }
+    } else {
+        $_SESSION['upload_errors'] = "Failed to move the uploaded file.";
     }
 
-    // Insert post
-    $stmt = $conn->prepare("INSERT INTO posts (title, body, thumbnail, category_id, author_id, is_featured) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssiii", $title, $body, $thumbnail_name, $category_id, $author_id, $is_featured);
-    $stmt->execute();
-
-    if ($stmt->errno) {
-        $_SESSION['add-post'] = "Failed to add the post. Please try again.";
-        header('location:' . ROOT_URL . 'admin/add-post.php');
-        die();
-    }
-
-    $_SESSION['add-post-success'] = "New post added successfully";
-    header('location:' . ROOT_URL . 'admin/');
-    die();
+    header("Location: add-post.php");
+    exit();
 }
+?>

@@ -51,40 +51,48 @@ $posts = $stmt->get_result();
             </ul>
         </aside>
         <main>
-            <h2>Manage Posts</h2>
-            <?php if ($posts->num_rows > 0) : ?>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($post = $posts->fetch_assoc()) : ?>
-                            <?php
-                            $current_id = $post['category_id'];
-                            $stmt = $conn->prepare("SELECT title FROM category WHERE id=?");
-                            $stmt->bind_param("i", $current_id);
-                            $stmt->execute();
-                            $category_result = $stmt->get_result();
-                            $category = $category_result->fetch_assoc();
-                            ?>
-                            <tr>
-                                <td><?= $post['title'] ?></td>
-                                <td><?= $category['title'] ?></td>
-                                <td><a href="<?= ROOT_URL ?>admin/edit-post.php?id=<?= $post['id'] ?>" class="btn sm">Edit</a></td>
-                                <td><a href="<?= ROOT_URL ?>admin/delete-post.php?id=<?= $post['id'] ?>" class="btn sm danger">Delete</a></td>
-                            </tr>
-                        <?php endwhile ?>
-                    </tbody>
-                </table>
-            <?php else : ?>
-                <div class="alert_message error">No posts found</div>
-            <?php endif ?>
-        </main>
+    <h2>Manage Files</h2>
+    <?php
+    // Fetch all files from the database
+    $stmt = $conn->prepare("SELECT * FROM files ORDER BY created_at DESC");
+    $stmt->execute();
+    $files = $stmt->get_result();
+    ?>
+
+    <?php if ($files->num_rows > 0) : ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($file = $files->fetch_assoc()) : ?>
+                    <?php
+                    // Fetch the category name
+                    $current_id = $file['category_id'];
+                    $stmt_category = $conn->prepare("SELECT title FROM category WHERE id=?");
+                    $stmt_category->bind_param("i", $current_id);
+                    $stmt_category->execute();
+                    $category_result = $stmt_category->get_result();
+                    $description = $category_result->fetch_assoc();
+                    ?>
+                    <tr>
+                        <td><?= $file['title'] ?></td>
+                        <td><?= $description['description'] ?></td>
+                        <td><a href="<?= ROOT_URL ?>admin/edit-file.php?id=<?= $file['id'] ?>" class="btn sm">Edit</a></td>
+                        <td><a href="<?= ROOT_URL ?>admin/delete-file.php?id=<?= $file['id'] ?>" class="btn sm danger">Delete</a></td>
+                    </tr>
+                <?php endwhile ?>
+            </tbody>
+        </table>
+    <?php else : ?>
+        <div class="alert_message error">No files found</div>
+    <?php endif ?>
+</main>
     </div>
 </section>
 
