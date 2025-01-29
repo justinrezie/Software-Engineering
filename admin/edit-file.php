@@ -19,9 +19,8 @@ if (isset($_GET['id'])) {
 ?>
 
 <section class="form_section">
-    <div class="container form_section-container">
+        <div class="container form_section-container">
         <h2>Edit File</h2>
-
         <?php if (isset($_SESSION['error'])): ?>
             <div class="alert_message error"><?= $_SESSION['error'] ?></div>
             <?php unset($_SESSION['error']); ?>
@@ -41,11 +40,6 @@ if (isset($_GET['id'])) {
             <label for="description">Description</label>
             <textarea name="description" rows="5" placeholder="Description" required><?= htmlspecialchars($file['description']) ?></textarea>
 
-
-            <div class="form_control">
-                <label for="file_upload">Change File</label>
-                <input type="file" name="file_upload" id="file_upload">
-            </div>
             <button type="submit" name="submit" class="btn">Update File</button>
         </form>
     </div>

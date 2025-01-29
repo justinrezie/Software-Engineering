@@ -423,17 +423,14 @@ footer ul a:hover{
 
   .form_section{
       display: grid;
-      margin-top: 7rem;
+      margin-top: 10rem;
       place-items: center;
       height: 40vh;
   }
-  .form_section-container{
-      width: var(--form-width);
+  .form_section .container .form_section-container{
       padding: 15px;
       border-radius: 10px;
-      width: 60%;
-      background-color: #d3d3ee83;
-      box-shadow: 1rem 1rem 1rem 1rem rgba(187, 156, 156, 0.1);
+      width: 50%;
   }
   .form_section-container input::placeholder{
       color: #000000;

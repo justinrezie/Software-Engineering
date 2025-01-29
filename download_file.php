@@ -1,29 +1,29 @@
 <?php
-// Check if the 'file' parameter is set in the URL
+// Ensure file parameter is set
 if (isset($_GET['file']) && !empty($_GET['file'])) {
-    // Get the file path from the URL parameter
-    $file_path = urldecode($_GET['file']);
+    $file_name = basename($_GET['file']); // Sanitize the file name
 
-    // Make sure the file exists
+    // Define the absolute path to your uploads directory
+    $file_dir = $_SERVER['DOCUMENT_ROOT'] . '../uploads/'; // Adjust this if necessary
+    $file_path = $file_dir . $file_name;
+
+    // Output the file path for debugging
+    echo 'Trying to access: ' . $file_path;
+
+    // Check if file exists
     if (file_exists($file_path)) {
-        // Get the file info (such as the file name and mime type)
-        $file_name = basename($file_path);
-        $file_mime_type = mime_content_type($file_path);
-
-        // Set headers for the download
-        header('Content-Type: ' . $file_mime_type);
+        // Set headers to force download
+        header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename="' . $file_name . '"');
         header('Content-Length: ' . filesize($file_path));
 
-        // Read the file and send it to the user
+        // Output the file
         readfile($file_path);
         exit;
     } else {
-        // Handle the case where the file does not exist
-        echo "File not found.";
+        echo 'File not found on the server. Please check the file path.';
     }
 } else {
-    // Handle the case where the 'file' parameter is missing
-    echo "No file specified.";
+    echo 'No file specified or the file parameter is empty.';
 }
 ?>

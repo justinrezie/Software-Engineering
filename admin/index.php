@@ -1,14 +1,14 @@
 <?php
 include 'partials/header.php';
 
-// Fetch current user's posts from the database
-$current_user_id = $_SESSION['user-id'];
-$query = "SELECT id, title, category_id FROM posts WHERE author_id=? ORDER BY id DESC";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $current_user_id);
-$stmt->execute();
-$posts = $stmt->get_result();
-?>
+// // Fetch current user's posts from the database
+// $current_user_id = $_SESSION['user-id'];
+// $query = "SELECT id, title, category_id FROM post WHERE author_id=? ORDER BY id DESC";
+// $stmt = $conn->prepare($query);
+// $stmt->bind_param("i", $current_user_id);
+// $stmt->execute();
+// $posts = $stmt->get_result();
+// ?>
 
 <section class="dashboard">
     <div class="container dashboard_container">
@@ -54,7 +54,7 @@ $posts = $stmt->get_result();
     <h2>Manage Files</h2>
     <?php
     // Fetch all files from the database
-    $stmt = $conn->prepare("SELECT * FROM files ORDER BY created_at DESC");
+    $stmt = $conn->prepare("SELECT * FROM files ORDER BY uploaded_at DESC");
     $stmt->execute();
     $files = $stmt->get_result();
     ?>
@@ -82,7 +82,7 @@ $posts = $stmt->get_result();
                     ?>
                     <tr>
                         <td><?= $file['title'] ?></td>
-                        <td><?= $description['description'] ?></td>
+                        <td><?= $file['description'] ?></td>
                         <td><a href="<?= ROOT_URL ?>admin/edit-file.php?id=<?= $file['id'] ?>" class="btn sm">Edit</a></td>
                         <td><a href="<?= ROOT_URL ?>admin/delete-file.php?id=<?= $file['id'] ?>" class="btn sm danger">Delete</a></td>
                     </tr>
@@ -92,9 +92,9 @@ $posts = $stmt->get_result();
     <?php else : ?>
         <div class="alert_message error">No files found</div>
     <?php endif ?>
-</main>
+    </main>
     </div>
 </section>
-
 <?php include '../partials/footer.php'; ?>
 <script src="../js/main.js"></script>
+
