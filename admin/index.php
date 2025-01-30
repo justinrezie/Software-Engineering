@@ -82,9 +82,13 @@ include 'partials/header.php';
                     ?>
                     <tr>
                         <td><?= $file['title'] ?></td>
-                        <td><?= $file['description'] ?></td>
-                        <td><a href="<?= ROOT_URL ?>admin/edit-file.php?id=<?= $file['id'] ?>" class="btn sm">Edit</a></td>
-                        <td><a href="<?= ROOT_URL ?>admin/delete-file.php?id=<?= $file['id'] ?>" class="btn sm danger">Delete</a></td>
+                        <td><?= substr($file['description'], 0 , 15) ?>...</td>
+                        <td>
+                            <a href="<?= ROOT_URL ?>admin/edit-file.php?id=<?= $file['id'] ?>" class="btn sm">Edit</a>
+                        </td>
+                        <td>
+                            <a href="<?= ROOT_URL ?>admin/delete-file.php?id=<?= $file['id'] ?>" class="btn sm danger">Delete</a>
+                        </td>
                     </tr>
                 <?php endwhile ?>
             </tbody>
@@ -92,8 +96,9 @@ include 'partials/header.php';
     <?php else : ?>
         <div class="alert_message error">No files found</div>
     <?php endif ?>
-    </main>
-    </div>
+</main>
+</div>
+
 </section>
 <?php include '../partials/footer.php'; ?>
 <script src="../js/main.js"></script>

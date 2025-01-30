@@ -34,7 +34,7 @@ $result = mysqli_query($conn, $query);
         </div>
         <div class="post_info">
             <a href="category-post.html" class="category_button">Wild Life</a>
-            <h2 class="post_title"><a href="post.html">Technology</a></h2>
+            <h2 class="post_title"><a href="about.html">Technology</a></h2>
             <p class="post_body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium mollitia amet esse magnam molestiae sequi cumque blanditiis fuga. Natus impedit cupiditate facilis ipsum rem voluptatum a, sint asperiores minus magnam!</p>
             <div class="post_author">
             
@@ -43,28 +43,35 @@ $result = mysqli_query($conn, $query);
     </section>
 
 <!-- POSTS -->
+
 <section class="files_section">
-    <h1>Files</h1>
+<h1>Files</h1>
 
-    <?php if ($result && $result->num_rows > 0): ?>
-        <div class="files_grid">
-            <?php while ($file = $result->fetch_assoc()): ?>
-                <div class="file_card">
-                    <h3><?= htmlspecialchars($file['title']) ?></h3>
-                    <p><?= nl2br(htmlspecialchars($file['description'])) ?></p>
-                    <p>Uploaded At: <?= date("M d, Y - H:i", strtotime($file['created_at'])) ?></p>
+<?php if ($result && $result->num_rows > 0): ?>
+    <div class="files_grid">
+        <?php while ($file = $result->fetch_assoc()): ?>
+            <div class="file_card">
+                <img src="images/Very Basic Image file.png" alt="File Image" style="width: 10%; height: auto;">
+                <h3><?= htmlspecialchars($file['title']) ?></h3>
+                <p><?= substr ($file['description'], 0 , 10) ?>...</p>
 
-                    <!-- View File Button -->
-                    <a href="https://docs.google.com/viewer?url=<?= urlencode($google_file_url) ?>" class="btn">View in Google Docs</a>
-                    </div>
-            <?php endwhile; ?>
-        </div>
-    <?php else: ?>
-        <p>No files found.</p>
-    <?php endif; ?>
+                <?php 
+                $fileDate = date("Y-m-d", strtotime($file['uploaded_at']));
+                $today = date("Y-m-d");
+                if ($fileDate === $today): ?>
+                    <p>Uploaded Today at <?= date("g:i A", strtotime($file['uploaded_at'])) ?></p>
+                <?php else: ?>
+                    <p><?= date("F j, Y \a\\t g:i A", strtotime($file['uploaded_at'])) ?></p>
+                <?php endif; ?>
+
+                <a href="view_file.php?file=<?= urlencode($file['file_path']) ?>" class="btn" target="_blank">View File</a>
+                </div>
+        <?php endwhile; ?>
+    </div>
+<?php else: ?>
+    <p>No files found.</p>
+<?php endif; ?>
 </section>
-
-
 
 
 </div>

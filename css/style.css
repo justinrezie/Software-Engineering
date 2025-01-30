@@ -187,6 +187,7 @@ nav button{
 /*==========================GENERAL POST==========================*/
 .post_thumbnail{
   border-radius:0;
+  background-color: var(--color-green);
   box-shadow: 1rem 1rem 3rem rgb(0.1, 0.9, 1, 0.1);
   overflow: hidden;
   margin: 1.6rem;
@@ -890,5 +891,8 @@ nav button{
   }
   #hide_sidebar-btn{
       display: none;
+  }
+  .post_info p{
+    display: hidden;
   }
 }

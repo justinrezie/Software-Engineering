@@ -1,30 +1,45 @@
 <?php
-// Check if the 'file' parameter exists in the URL
-if (isset($_GET['file']) && !empty($_GET['file'])) {
-    $file_name = urldecode($_GET['file']); // Decode the file name
+include 'partials/header.php';
 
-    // Define the path to your files directory (ensure this is correct)
-    $file_path = 'uploads/' . $file_name;
+// // Check if a file path is provided
+// if (!isset($_GET['file']) || empty($_GET['file'])) {
+//     echo "Invalid file request.";
+//     exit;
+// }
 
-    // Check if the file exists
-    if (file_exists($file_path)) {
-        // Assuming the file is uploaded to Google Drive, create the Google Docs URL
-        // Replace this with the actual Google Drive URL (ensure you have a valid file link)
-        $google_file_url = "https://drive.google.com/file/d/YOUR_FILE_ID/view?usp=sharing";
+// $filePath = urldecode($_GET['file']);
 
-        // Properly encode the Google Drive URL
-        $encoded_google_file_url = urlencode($google_file_url);
+// Fetch only image title and description from the database
+$query = $conn->prepare("SELECT title, description FROM files WHERE file_name = ? LIMIT 1");
+$query->bind_param("s", $filePath);
+$query->execute();
+$result = $query->get_result();
 
-        // Generate the Google Docs viewer link
-        $google_docs_view_url = "https://docs.google.com/viewer?url=" . $encoded_google_file_url;
+// if ($result->num_rows === 0) {
+//     echo "File not found.";
+//     exit;
+// }
 
-        echo '<a href="' . $google_docs_view_url . '" class="btn">View in Google Docs</a>';
-    } else {
-        echo "File not found: " . htmlspecialchars($file_name);
-        exit;
-    }
-} else {
-    echo "No file specified in the URL.";
-    exit;
-}
+$file = $result->fetch_assoc();
 ?>
+
+    <section class="files_section">
+        <h1>Image Details</h1>
+        <div class="file_details_card">
+        <h3><?= htmlspecialchars($file['title']) ?></h3>
+                <p><?= substr ($file['description'], 0 , 10) ?>...</p>
+
+                <?php 
+                $fileDate = date("Y-m-d", strtotime($file['uploaded_at']));
+                $today = date("Y-m-d");
+                if ($fileDate === $today): ?>
+                    <p>Uploaded Today at <?= date("g:i A", strtotime($file['uploaded_at'])) ?></p>
+                <?php else: ?>
+                    <p><?= date("F j, Y \a\\t g:i A", strtotime($file['uploaded_at'])) ?></p>
+                <?php endif; ?>
+
+            <a href="index.php" class="btn">Back to Files</a>
+        </div>
+    </section>
+</body>
+</html>
