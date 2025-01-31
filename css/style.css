@@ -364,6 +364,15 @@ footer ul a:hover{
       color: var(--color-white);
 
   }
+  .btn-back{
+    display: inline-block;
+    width: fit-content;
+    padding: 0.2rem 1rem;
+    border-radius: var(--card-border-radius-2);
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--color-red);
+  }
   .btn.sm{
       padding:0.3rem 0.7rem;
       font-size: 0.8rem;
@@ -426,13 +435,20 @@ footer ul a:hover{
       display: grid;
       margin-top: 10rem;
       place-items: center;
-      height: 40vh;
+      height: 60vh;
   }
   .form_section .container .form_section-container{
       padding: 15px;
       border-radius: 10px;
+      background-color: #da0f3f;
       width: 50%;
   }
+  .form_section .form_section-container{
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 2px 5px 5px 4px rgba(1, 0, 0, 0.1);
+    width: 50%;
+}
   .form_section-container input::placeholder{
       color: #000000;
   }

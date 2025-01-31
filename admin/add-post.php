@@ -13,11 +13,14 @@ $description = $_SESSION['upload-data']['description'] ?? null;
 unset($_SESSION['upload-data']);
 ?>
 <section class="form_section">
+    <form class="form_section-container">
     <form action="add-post-logic.php" enctype="multipart/form-data" method="POST">
     <input type="text" name="title" placeholder="Title">
     <textarea name="description" placeholder="Description"></textarea>
     <input type="file" name="file_upload">
     <button type="submit" name="submit" class="btn">Upload</button>
+    <a href="index.php"class="btn-back">Back</button></a>
+    </form>
     </form>
 </section>
 

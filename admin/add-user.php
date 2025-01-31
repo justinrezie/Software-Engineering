@@ -56,6 +56,7 @@ unset($_SESSION['signup-data']);
                 <input type="file" name="avatar" id="avatar">
             </div>
             <button type="submit" name="submit" class="btn">Sign Up</button>
+            <a href="manage-user.php"class="btn-back">Back</button></a>
         </form>
     </div>
 </section>

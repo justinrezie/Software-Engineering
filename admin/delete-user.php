@@ -5,7 +5,7 @@ if (isset($_GET['id'])) {
     // Sanitize and validate the ID
     $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
 
-    if ($id) {
+    if ($id && filter_var($id, FILTER_VALIDATE_INT)) {
         // Fetch user from the database
         $query = "SELECT * FROM user WHERE id=$id";
         $result = mysqli_query($conn, $query);
@@ -22,14 +22,14 @@ if (isset($_GET['id'])) {
                 unlink($avatar_path);
             }
 
-            //fetch all thumbnail of user's post and delete them
-            $thumbnail_query = "SELECT thumbnail FROM posts WHERE author_id=$id ";
+            // Fetch and delete all thumbnails of user's posts
+            $thumbnail_query = "SELECT thumbnail FROM posts WHERE author_id=$id";
             $thumbnail_result = mysqli_query($conn, $thumbnail_query);
-            if(mysqli_num_rows($thumbnail_result) > 0 ){
-                while($thumbnail = mysqli_fetch_assoc($thumbnail_result)){
-                    $thumbnail_path = '../images' . $thumbnail['thumbnail'];
-                    //delete thumbnail from images folder is exist
-                    if($thumbnail_path){
+            if ($thumbnail_result && mysqli_num_rows($thumbnail_result) > 0) {
+                while ($thumbnail = mysqli_fetch_assoc($thumbnail_result)) {
+                    $thumbnail_path = '../images/' . $thumbnail['thumbnail'];
+                    // Delete thumbnail if it exists
+                    if (file_exists($thumbnail_path) && !empty($thumbnail['thumbnail'])) {
                         unlink($thumbnail_path);
                     }
                 }
@@ -40,8 +40,8 @@ if (isset($_GET['id'])) {
             $delete_user_result = mysqli_query($conn, $delete_user_query);
 
             // Check for errors during deletion
-            if (mysqli_error($conn)) {
-                $_SESSION['delete-user'] = "Couldn't delete '{$user['firstname']} {$user['lastname']}'";
+            if (!$delete_user_result) {
+                $_SESSION['delete-user'] = "Couldn't delete '{$user['firstname']} {$user['lastname']}': " . mysqli_error($conn);
             } else {
                 $_SESSION['delete-user-success'] = "'{$user['firstname']} {$user['lastname']}' deleted successfully";
             }
